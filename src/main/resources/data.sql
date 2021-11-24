@@ -47,9 +47,9 @@ CREATE TABLE `hairdresser` (
 --
 
 INSERT INTO `hairdresser` (`id`, `description`, `firstname`, `image`, `lastname`) VALUES
-                                                                                      (1, 'Master', 'Maria', 'resources/images/frisörin2.jpg', 'Majer'),
-                                                                                      (2, 'Azubi', 'Ina', 'resources/images/frisörin3.jpg', 'Stein'),
-                                                                                      (3, 'Master', 'Lena', 'resources/images/frisörin1.jpg', 'Müller');
+                                                                                      (1, 'Master', 'Maria', 'resources/images/fris2.jpg', 'Majer'),
+                                                                                      (2, 'Azubi', 'Ina', 'resources/images/fris3.jpg', 'Stein'),
+                                                                                      (3, 'Master', 'Lena', 'resources/images/fris1.jpg', 'Müller');
 
 -- --------------------------------------------------------
 
@@ -73,10 +73,10 @@ CREATE TABLE `hairdresser_serv` (
 
 INSERT INTO `hairdresser_serv` (`id`, `description`, `duration`, `image`, `price`, `service_category`, `title`) VALUES
                                                                                                                     (1, 'Ob kurz oder lang - wir scneiden die deine Wunschfrisur!', 1800000000000, 'resources/images/schneiden.jpg', 4000, 'DAMEN_HAARSCHNITT', 'Waschen & Schneiden'),
-                                                                                                                    (2, 'Angesagte Styles und Looks - jetzt umstylen lassen!', 1800000000000, 'resources/images/FönenLegenStylen.jpg', 4000, 'DAMEN_HAARSCHNITT', 'Fönen, Legen & Stylen'),
+                                                                                                                    (2, 'Angesagte Styles und Looks - jetzt umstylen lassen!', 1800000000000, 'resources/images/FoenenLegenStylen.jpg', 4000, 'DAMEN_HAARSCHNITT', 'Fönen, Legen & Stylen'),
                                                                                                                     (3, 'Typveränderung gefällig? Unsere Locken halten in jedem Haar', 1800000000000, 'resources/images/locken.jpg', 2500, 'DAMEN_HAARSCHNITT', 'Locken machen'),
-                                                                                                                    (4, 'Ansatz rausgewachsen? Jetzt schnell nachfärben lassen!', 3600000000000, 'resources/images/färben.jpg', 3500, 'DAMEN_COLORATION', 'Ansatzfärbung'),
-                                                                                                                    (5, 'Egal ob langes oder kurzes, glattes oder welliges Haar -Balayage ist im Trendund steht jedem!', 8100000000000, 'resources/images/Stränchen.jpg', 5500, 'DAMEN_COLORATION', 'Foliensträhnen'),
+                                                                                                                    (4, 'Ansatz rausgewachsen? Jetzt schnell nachfärben lassen!', 3600000000000, 'resources/images/faerben.jpg', 3500, 'DAMEN_COLORATION', 'Ansatzfärbung'),
+                                                                                                                    (5, 'Egal ob langes oder kurzes, glattes oder welliges Haar -Balayage ist im Trendund steht jedem!', 8100000000000, 'resources/images/Straenchen.jpg', 5500, 'DAMEN_COLORATION', 'Foliensträhnen'),
                                                                                                                     (6, 'Wir frischen deine Haarfarbe wieder auf - schnell &unkompliziert', 7800000000000, 'resources/images/Farbaufrischung.jpg', 2500, 'DAMEN_COLORATION', 'Farbaufrischung'),
                                                                                                                     (7, 'Lass dich Inspirieren. Wir haben den passenden Look für deinen Typ!', 1800000000000, 'resources/images/herrenschnitt_lang.jpg', 2400, 'HERREN_HAARSCHNITT', 'Langhaarschnitt'),
                                                                                                                     (8, 'Coole Looks für kurze Haare - unsere Maschinenhaarschnitte sind immer voll im Trend!', 1800000000000, 'resources/images/Maschinenhaarschnitt.jpg', 1500, 'HERREN_HAARSCHNITT', 'Maschinenhaarschnitt'),
@@ -104,8 +104,7 @@ CREATE TABLE `user` (
 
 INSERT INTO `user` (`id`, `email`, `firstname`, `lastname`, `phone`) VALUES
                                                                          (1, 'max@web.de', 'Max', 'Mustermann', '0123456789'),
-                                                                         (2, 'maja@web.de', 'Maja', 'Müller', '23452357888'),
-                                                                         (3, 'test@yahoo.de', 'Test user', 'Test lastname', '123456789');
+                                                                         (2, 'maja@web.de', 'Maja', 'Müller', '23452357888');
 
 --
 -- Indizes der exportierten Tabellen

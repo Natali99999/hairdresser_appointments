@@ -37,11 +37,11 @@ class HairdresserServiceTest {
     void save() {
 
         Hairdresser h1 = new Hairdresser(
-                "Maria", "Majer", "Master", "resources/images/frisörin2.jpg");
+                "Maria", "Majer", "Master", "resources/images/fris2.jpg");
         Hairdresser h2 = new Hairdresser(
-                "Ina", "Stein", "Azubi", "resources/images/frisörin3.jpg");
+                "Ina", "Stein", "Azubi", "resources/images/fris3.jpg");
         Hairdresser h3 = new Hairdresser(
-                "Lena", "Müller", "Master", "resources/images/frisörin1.jpg");
+                "Lena", "Müller", "Master", "resources/images/fris1.jpg");
 
         assertNotNull(haidresserService.save(h1));
         assertNotNull(haidresserService.save(h2));

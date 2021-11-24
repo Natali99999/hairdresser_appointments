@@ -31,7 +31,7 @@ class AppointmentServiceTest {
     void list() {
 
         List<Appointment> list =  appointmentService.list();
-        assertEquals(11, list.size());
+        assertEquals(8, list.size());
     }
 
     @Test
@@ -46,15 +46,15 @@ class AppointmentServiceTest {
                         4000, "resources/images/schneiden.jpg");
 
         Appointment a2 = new Appointment(LocalDateTime.now().plusDays(2));
-        User user2 = new User("Maja", "Müller", "majy@web.de", "23452357888");
+        User user2 = new User("Maja", "Mueller", "maja@web.de", "23452357888");
         HairdresserServ serv2 =
                 new HairdresserServ(SERVICE_CATEGORY.DAMEN_HAARSCHNITT, "Fönen, Legen & Stylen",
                         30,
                         "Angesagte Styles und Looks - jetzt umstylen lassen!",
-                        4000, "resources/images/FönenLegenStylen.jpg");
+                        4000, "resources/images/FoenenLegenStylen.jpg");
 
         Hairdresser h1 = new Hairdresser(
-                "Lena", "Müller", "Master", "resources/images/frisörin1.jpg");
+                "Lena", "Müller", "Master", "resources/images/fris1.jpg");
 
        assertNotNull(appointmentService.save(a1));
        assertNotNull(appointmentService.save(a2));
@@ -94,7 +94,7 @@ class AppointmentServiceTest {
                 new HairdresserServ(SERVICE_CATEGORY.DAMEN_HAARSCHNITT,"Fönen, Legen & Stylen",
                         30,
                         "Angesagte Styles und Looks - jetzt umstylen lassen!",
-                        4000, "resources/images/FönenLegenStylen.jpg");
+                        4000, "resources/images/FoenenLegenStylen.jpg");
         HairdresserServ serv1_3 =
                 new HairdresserServ(SERVICE_CATEGORY.DAMEN_HAARSCHNITT,"Locken machen",
                         30,
@@ -110,13 +110,13 @@ class AppointmentServiceTest {
                 new HairdresserServ(SERVICE_CATEGORY.DAMEN_COLORATION,"Ansatzfärbung",
                         60,
                         "Ansatz rausgewachsen? Jetzt schnell nachfärben lassen!",
-                        3500, "resources/images/färben.jpg");
+                        3500, "resources/images/faerben.jpg");
 
         HairdresserServ serv2_2 =
                 new HairdresserServ(SERVICE_CATEGORY.DAMEN_COLORATION,"Foliensträhnen",
                         135,
                         "Egal ob langes oder kurzes, glattes oder welliges Haar -Balayage ist im Trendund steht jedem!",
-                        5500, "resources/images/Stränchen.jpg");
+                        5500, "resources/images/Straenchen.jpg");
         HairdresserServ serv2_3 =
                 new HairdresserServ(SERVICE_CATEGORY.DAMEN_COLORATION,"Farbaufrischung",
                         130,
@@ -172,11 +172,11 @@ class AppointmentServiceTest {
 
         // !! Hairdresser
         Hairdresser h1 = new Hairdresser(
-                "Maria", "Majer", "Master", "resources/images/frisörin2.jpg");
+                "Maria", "Majer", "Master", "resources/images/fris2.jpg");
         Hairdresser h2 = new Hairdresser(
-                "Ina", "Stein", "Azubi", "resources/images/frisörin3.jpg");
+                "Ina", "Stein", "Azubi", "resources/images/fris3.jpg");
         Hairdresser h3 = new Hairdresser(
-                "Lena", "Müller", "Master", "resources/images/frisörin1.jpg");
+                "Lena", "Müller", "Master", "resources/images/fris1.jpg");
 
         assertNotNull(hairdresserService.save(h1));
         assertNotNull(hairdresserService.save(h2));
