@@ -1,0 +1,49 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="style.css"/>
+</h:head>
+<h:body>
+
+<h:form id="form">
+    <div class="card">
+        <p:carousel value="#{homeBean.hairdressers}" var="hairdresser"
+                    numVisible="3" numScroll="1" circular="true" autoplayInterval="3000"  >
+            <f:facet name="header">
+                <h1>Termin bei unseren Friseuren buchen</h1>
+            </f:facet>
+            <p:card style="height: 25rem  ;width: 25rem; margin-bottom: 2em;" >
+                <f:facet name="header">
+                    <img alt="hairdresser.image" src="#{hairdresser.image}" height="200"/>
+                </f:facet>
+                <f:facet name="title">
+                    "#{hairdresser.fullName}"
+                </f:facet>
+                <f:facet name="subtitle">
+                    "#{hairdresser.description}"
+                </f:facet>
+
+                <f:facet name="footer">
+                    <p:commandButton  value="Termin buchen"
+                                      action="#{homeBean.tobook}"
+                                      actionListener="#{homeBean.selectHairdresser(hairdresser)}"
+                                      update="@form"
+                                      process="@this"
+                    ></p:commandButton>
+                </f:facet>
+            </p:card>
+        </p:carousel>
+    </div>
+</h:form>
+
+
+
+</h:body>
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+
+</h:head>
+<h:body>
+    <h:form id="form">
+        <p:growl id="messages" showDetail="true"/>
+
+        <p:panel header="Terminkalender von #{appointmentBean.selectedHairdresser.fullName}">
+            <p:dataGrid columns="3" var="hairdresser" value="#{appointmentBean.hairdressers}">
+                <p:card style="height: 9rem ;width: 12rem; margin-bottom: 2em;" >
+                    <f:facet name="header">
+                        <p:avatar styleClass="p-mr-2" size="xlarge" shape="circle" >
+                            <img alt="hservice.image" src="#{hairdresser.image}"/>
+                        </p:avatar>
+                       #{hairdresser.fullName}
+
+                    </f:facet>
+                    <f:facet name="title">
+                        <p:commandButton value="Termine anzeigen"
+                                         actionListener="#{appointmentBean.selectHairdresser(hairdresser)}"
+                                         update="@form"
+                                         process="@this"
+                        />
+
+                    </f:facet>
+                </p:card>
+            </p:dataGrid>
+         <p:schedule
+                 id="schedule"
+                 value="#{appointmentBean.lazyModel}"
+                 widgetVar="myschedule"
+                 view="timeGridWeek"
+                 styleClass="p-mt-6"
+                 minTime="#{appointmentBean.minTime}" maxTime="#{appointmentBean.maxTime}"
+                 locale="#{appointmentBean.locale}" timeZone="#{appointmentBean.timeZone}"
+                 showWeekends="false"
+                 resizable="false"
+                 draggable="false"
+                 height="auto"
+         ></p:schedule>
+
+
+         </p:panel>
+     </h:form>
+
+ </h:body>
+ </html>

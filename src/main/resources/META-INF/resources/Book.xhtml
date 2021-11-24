@@ -1,0 +1,177 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+    <h:outputStylesheet library="css" name="style.css"/>
+    <h:outputStylesheet library="ja" name="script.js"/>
+    <title>Termin buchen</title>
+</h:head>
+
+
+<body>
+
+<p:growl id="messages" sticky="true"  showDetail="true"/>
+<p:outputLabel value="Termin bei Friseurin #{homeBean.selectedHairdresser.fullName}"/>
+<h:form id="form">
+
+<p:wizard flowListener="#{bookBean.onFlowProcess}" style="height: 100%">
+        <p:tab id="service" title="Service auswählen">
+
+            <p:accordionPanel id="myAccordionPanel" value="#{bookBean.categories}" var="category">
+                <p:ajax event="tabChange" listener="#{bookBean.onTabChange}" update="myAccordionPanel gridServices"/>
+                <p:ajax event="tabClose" listener="#{bookBean.onTabClose}"/>
+
+                <p:tab title="#{category.title}">
+
+                    <p:dataGrid id="gridServices" columns="3" var="hservice" value="#{bookBean.services}">
+                        <p:card style="height: 23rem ;width: 25rem; margin-bottom: 2em;">
+                            <f:facet name="header">
+                                <img alt="hservice.image" src="#{hservice.image}" height="200"/>
+                            </f:facet>
+                            <f:facet name="title">
+                                "#{hservice.title}"
+                            </f:facet>
+
+                            <f:facet name="subtitle"> "#{hservice.description}"
+                                <p:panelGrid columns="2" layout="grid">
+                                    <h:outputText value="#{hservice.stringDuration}"/>
+
+                                    <h:outputText value="#{hservice.doublePrice}">
+                                        <f:convertNumber currencySymbol="€" type="currency"/>
+                                    </h:outputText>
+                                </p:panelGrid>
+                            </f:facet>
+
+
+                                <p:commandButton value="Service wählen">
+                                    <f:setPropertyActionListener value="#{hservice}"
+                                                                 target="#{bookBean.selectedHairdresserService}"/>
+                                </p:commandButton>
+
+                        </p:card>
+                    </p:dataGrid>
+
+                </p:tab>
+
+            </p:accordionPanel>
+        </p:tab>
+
+        <p:tab id="termin" title="Termin wählen">
+            <p:panel header="Termin wählen">
+                <p:schedule
+                        id="schedule"
+                        value="#{bookBean.model}"
+                        widgetVar="myschedule"
+                        view="timeGridWeek"
+                        styleClass="p-mt-6"
+                        minTime="#{bookBean.minTime}"
+                        maxTime="#{bookBean.maxTime}"
+                        locale="#{bookBean.locale}"
+                        timeZone="#{bookBean.timeZone}"
+                        slotEventOverlap="false"
+                        showWeekends="false"
+                        resizable="false"
+                        draggable="false"
+                        height="700px">
+                    <p:ajax event="eventSelect" listener="#{bookBean.onEventSelect}" update="eventDetails"
+                            oncomplete="PF('eventDialog').show();"/>
+                    <p:ajax event="dateSelect" listener="#{bookBean.onDateSelect}" update="eventDetails"
+                            oncomplete="PF('eventDialog').show();"/>
+                </p:schedule>
+
+                <p:dialog widgetVar="eventDialog"
+                          header="#{bookBean.selectedHairdresserService.title}"
+                          showEffect="fade"
+                          hideEffect="fade">
+                    <form action="dForm">
+
+
+                    <h:panelGrid id="eventDetails" columns="2" cellpadding="7">
+                        <p:outputLabel for="dauer" value="Dauer" styleClass="p-text-bold"/>
+                        <p:outputLabel id="dauer" value="#{bookBean.selectedHairdresserService.stringDuration}"
+                                       styleClass="p-text-bold"/>
+
+                        <p:outputLabel for="timestart" value="Time" styleClass="p-text-bold"/>
+                        <div class="p-field p-col-12 p-md-4">
+                            <p:datePicker id="timestart" appendTo="@(body)"
+                                          value="#{bookBean.event.startDate}"
+                                          timeOnly="true" pattern="HH:mm">
+                                <f:validator validatorId="appointmentValidator" />
+                            </p:datePicker>
+                        </div>
+                    </h:panelGrid>
+                    <div class="p-d-flex p-jc-between p-mt-3">
+                        <p:commandButton type="reset" value="Abbrechen" styleClass="p-text-bold ui-button-outlined"/>
+
+                          <p:commandButton id="addEvent" value="Termin wählen"
+                                          action="#{bookBean.addEvent}"
+                                         oncomplete="PF('myschedule').update();PF('eventDialog').hide();">
+                        </p:commandButton>
+                    </div>
+                    </form>
+                </p:dialog>
+
+            </p:panel>
+        </p:tab>
+
+        <p:tab id="contact" title="Persönliche Angaben">
+            <p:panel header="Persönliche Angaben">
+                <h:panelGrid columns="2" columnClasses="label, value">
+                    <h:outputText value="Vorname: *"/>
+                    <h:inputText value="#{bookBean.userFirstsname}" label="Firstname" required="true"/>
+                    <h:outputText value="Nachname: *"/>
+                    <h:inputText value="#{bookBean.userLastsname}" label="Lastname" required="true"/>
+                    <h:outputText value="Email: *"/>
+                    <h:inputText value="#{bookBean.userEmail}" required="true" label="Email"/>
+                    <h:outputText value="Phone: "/>
+                    <h:inputText value="#{bookBean.userPhone}" label="Phone"/>
+                </h:panelGrid>
+
+            </p:panel>
+        </p:tab>
+        <p:tab id="confirm" title="Buchen">
+            <p:panel header="Prüfen">
+
+                <h:panelGrid id="pG" columns="2" columnClasses="label, value">
+                    <p:outputLabel value="Vorname" styleClass="p-text-bold"/>
+                    <p:outputLabel value="#{bookBean.userFirstsname}"
+                                  styleClass="outputLabel"/>
+                    <h:outputText value="Nachname: "/>
+                    <h:outputText value="#{bookBean.userLastsname}"
+                                  styleClass="outputLabel"/>
+                    <h:outputText value="Email: "/>
+                    <h:outputText value="#{bookBean.userEmail}"
+                                  styleClass="outputLabel"/>
+                    <h:outputText value="Phone: "/>
+                    <h:outputText value="#{bookBean.userPhone}"
+                                  styleClass="outputLabel"/>
+                    <h:outputText value=""/>
+                    <h:outputText value=""/>
+                    <h:outputText value="Service: "/>
+                    <h:outputText value="#{bookBean.selectedHairdresserService.title}"
+                                  styleClass="outputLabel"/>
+                    <h:outputText value="Preis: "/>
+                    <h:outputText value="#{bookBean.selectedHairdresserService.doublePrice} €"
+                                  styleClass="outputLabel"/>
+                    <h:outputText value="Datum: "/>
+                    <h:outputText value="#{bookBean.selectedDate}" styleClass="outputLabel"/>
+                    <h:outputText value="Uhrzeit: "/>
+                    <h:outputText value="#{bookBean.selectedTime}" styleClass="outputLabel"/>
+                    <h:outputText/>
+                </h:panelGrid>
+                <p:commandButton value="Buchen"
+                                 action="#{bookBean.toHome}"/>
+
+            </p:panel>
+        </p:tab>
+    </p:wizard>
+</h:form>
+
+</body>
+</html>
