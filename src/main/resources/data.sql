@@ -26,10 +26,7 @@ INSERT INTO `appointment` (`id`, `start`, `hairdresser_id`, `serv_id`, `user_id`
                                                                                       (5, '2021-11-24 11:59:44', 2, 5, 1),
                                                                                       (6, '2021-11-25 11:59:44', 2, 6, 2),
                                                                                       (7, '2021-11-22 11:59:44', 3, 7, 1),
-                                                                                      (8, '2021-11-21 11:59:44', 3, 10, 2),
-                                                                                      (25, '2021-11-25 09:00:00', 2, 3, 19),
-                                                                                      (28, '2021-11-25 07:00:00', 2, 3, 22),
-                                                                                      (29, '2021-11-25 10:30:00', 2, 2, 23);
+                                                                                      (8, '2021-11-21 11:59:44', 3, 10, 2);
 
 -- --------------------------------------------------------
 
@@ -108,27 +105,7 @@ CREATE TABLE `user` (
 INSERT INTO `user` (`id`, `email`, `firstname`, `lastname`, `phone`) VALUES
                                                                          (1, 'max@web.de', 'Max', 'Mustermann', '0123456789'),
                                                                          (2, 'maja@web.de', 'Maja', 'Müller', '23452357888'),
-                                                                         (3, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (4, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (5, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (6, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (7, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (8, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (9, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (10, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (11, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (12, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (13, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (14, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (15, 'natalifilatov@yahoo.de', 'Test user1', 'Test lastname1', '123456789'),
-                                                                         (16, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (17, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (18, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (19, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (20, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (21, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (22, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789'),
-                                                                         (23, 'natalifilatov@yahoo.de', 'Test user', 'Test lastname', '123456789');
+                                                                         (3, 'test@yahoo.de', 'Test user', 'Test lastname', '123456789');
 
 --
 -- Indizes der exportierten Tabellen
