@@ -54,6 +54,11 @@ public class BookBean implements Serializable {
 
 
     private Hairdresser selectedHairdresser;
+
+    public void setSelectedDatetime(LocalDateTime selectedDatetime) {
+        this.selectedDatetime = selectedDatetime;
+    }
+
     private LocalDateTime selectedDatetime = LocalDateTime.now();
     private List<Appointment> appointments;
     private SERVICE_CATEGORY[] categories;
@@ -110,38 +115,7 @@ public class BookBean implements Serializable {
 
             model.addEvent(currentEvent);
         }
-
-     /*   lazyModel = new LazyScheduleModel() {
-            @Override
-            public void loadEvents(LocalDateTime start, LocalDateTime end) {
-                appointments = appointmentService.findAppointmentByHairdresserAndStartBetween(
-                        homeBean.getSelectedHairdresser(), start, end);
-
-                for (Appointment appointment: appointments) {
-                    String title = appointment.getServ().getTitle();
-                    System.out.println("title: " + title);
-                    System.out.println("start: " + appointment.getStart());
-                    System.out.println("end: " + appointment.end());
-
-                    addEvent( DefaultScheduleEvent.builder()
-                            .title( appointment.getServ().getTitle())
-                            .startDate(appointment.getStart())
-                            .endDate(appointment.end())
-                            .description(appointment.getServ().getDescription())
-                            .borderColor("orange")
-                            .data(appointment)
-                            .overlapAllowed(false)
-                            .editable(false)
-                            .resizable(false)
-                            .display(ScheduleDisplayMode.BACKGROUND)
-                            .backgroundColor("green")
-                            .build());
-
-                }
-            }
-        };*/
-
-      }
+    }
     public ScheduleModel getModel() {
         return model;
     }
@@ -186,7 +160,6 @@ public class BookBean implements Serializable {
     public void setSelectedHairdresser(Hairdresser selectedHairdresser) {
         this.selectedHairdresser = selectedHairdresser;
     }
-
 
     public HairdresserServ getSelectedHairdresserService(){
         return selectedHairdresserServ;
@@ -234,7 +207,8 @@ public class BookBean implements Serializable {
             selectedHairdresserServ.addAppointment(appointment);
             hairdresserServService.update(selectedHairdresserServ);
 
-            Mail mail = new Mail(user.getEmail(), selectedHairdresserServ.getTitle(), "Termin gebucht");
+            String msg= String.format("Termin am %s um %s gebucht", getSelectedDate(), getSelectedTime());
+            Mail mail = new Mail(user.getEmail(), selectedHairdresserServ.getTitle(), msg);
             emailService.sendMail(mail);
             System.out.println("sendMail ");
             log.debug("sendMail");
@@ -246,17 +220,13 @@ public class BookBean implements Serializable {
             System.out.println(" hairdresser update" );
             hairdresserService.update(getSelectedHairdresser());
             System.out.println("update hairdresser " + getSelectedHairdresser());
-
         }
 
-         // reload
-     /*   appointments = appointmentService.findAppointmentByHairdresser(  getSelectedHairdresser());
-        System.out.println("reload appointments " + appointments.size());*/
+        // reload
+       appointments = appointmentService.findAppointmentByHairdresser(  getSelectedHairdresser());System.out.println("reload appointments " + appointments.size());
 
-      //  FacesMessage msg = new FacesMessage("Successful", "Appointment at :" + appointment + "is created");
-     //   FacesContext.getCurrentInstance().addMessage(null, msg);
-
-        System.out.println("end save ");
+        FacesMessage msg = new FacesMessage("Successful", "Appointment at :" + appointment + "is created");
+       FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
 
@@ -340,9 +310,9 @@ public class BookBean implements Serializable {
     }
 
     public void addEvent() {
+        System.out.println("addEvent");
 
         if (event.isAllDay()) {
-            // see https://github.com/primefaces/primefaces/issues/1164
             if (event.getStartDate().toLocalDate().equals(event.getEndDate().toLocalDate())) {
                 event.setEndDate(event.getEndDate().plusDays(1));
             }
@@ -357,7 +327,7 @@ public class BookBean implements Serializable {
             FacesContext.getCurrentInstance().addMessage(null, msg);
         }
         else {
-            System.out.println("update addEvent");
+            System.out.println("update addEvent " + selectedDatetime);
             model.updateEvent(event);
             FacesMessage msg = new FacesMessage("Successful",
                     "Die Terminzeit wurde zu " + event.getStartDate() + "geändert");
@@ -380,10 +350,13 @@ public class BookBean implements Serializable {
             return;
         }
         System.out.println("getSelectedHairdresserService()  " + getSelectedHairdresserService());
+        setSelectedDatetime(selectEvent.getObject());
+        System.out.println("setSelectedDatetime()  " +getSelectedDatetime());
 
         appointment.setStart(selectEvent.getObject());
 
         if (event != null) {
+            System.out.println("onDateSelect: event.getStartDate() " + event.getStartDate());
             event.setStartDate(selectEvent.getObject());
             event.setEndDate(selectEvent.getObject());
 
@@ -394,7 +367,7 @@ public class BookBean implements Serializable {
             dEvent.setResizable(false);
             dEvent.setDraggable(false);
             dEvent.setData(appointment);
-            dEvent.setEditable(false);
+            dEvent.setEditable(true);
         }
     }
   /*  public Validator getAppointmentValidator() {
@@ -416,13 +389,44 @@ public class BookBean implements Serializable {
         };
     }*/
 
+    public void eventDelete() {
+        System.out.println("onEventDelete " );
 
+        if (event != null && event.getId() != null) {
+            String t =event.getStartDate().toString();
+            FacesMessage msg;
+            if (model.deleteEvent(event) == true) {
+                event = new DefaultScheduleEvent<Appointment>();
+                msg = new FacesMessage("Successful", "Die Termninzeit wurde entfernt: " + t);
+             }
+            else{
+                msg = new FacesMessage("Failed", "Die Termninzeit wurde nicht entfernt: " + t);
+
+            }
+
+            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+        }
+    }
 
     public void onEventDelete() {
+        System.out.println("onEventDelete " );
         String eventId = FacesContext.getCurrentInstance().getExternalContext().getRequestParameterMap().get("eventId");
-        if (event != null) {
-            ScheduleEvent<?> event = model.getEvent(eventId);
+      /*  if (event != null) {
+            ScheduleEvent<?> event1 = model.getEvent(eventId);
+            model.deleteEvent(event1);
+            System.out.println("model.deleteEvent(event1) id " + eventId);
+            event = new DefaultScheduleEvent<Appointment>();
+
+        }*/
+
+        if (event != null && event.getId() != null) {
+            String t =event.getStartDate().toString();
             model.deleteEvent(event);
+            System.out.println("model.deleteEvent(event1) id " + eventId);
+            event = new DefaultScheduleEvent<Appointment>();
+            FacesMessage msg = new FacesMessage("Successful", "Die Terminzeit ist " + t);
+            FacesContext.getCurrentInstance().addMessage(null, msg);
         }
     }
 

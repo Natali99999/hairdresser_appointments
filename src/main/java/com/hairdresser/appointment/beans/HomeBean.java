@@ -52,6 +52,8 @@ public class HomeBean implements Serializable {
     public void selectHairdresser(Hairdresser selectedHairdresser) {
         log.debug("selectedHairdresser {}", selectedHairdresser.getFullName());
         setSelectedHairdresser(selectedHairdresser);
+
+
     }
 }
 

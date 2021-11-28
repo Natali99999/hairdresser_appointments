@@ -8,6 +8,8 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+    <meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0"/>
 
 </h:head>
 <h:body>
@@ -25,12 +27,16 @@
 
                     </f:facet>
                     <f:facet name="title">
-                        <p:commandButton value="Termine anzeigen"
-                                         actionListener="#{appointmentBean.selectHairdresser(hairdresser)}"
-                                         update="@form"
-                                         process="@this"
-                        />
-
+                            <p:commandButton value="Termine anzeigen"
+                                             actionListener="#{appointmentBean.selectHairdresser(hairdresser)}"
+                                             update="@form"
+                                             process="@this"
+                            />
+                            <p:commandButton value="Send me Hi" style="top: 3px;background-color: green"
+                                             actionListener="#{appointmentBean.sendEmailToHairdresser(hairdresser)}"
+                                             update="@form"
+                                             process="@this"
+                            />
                     </f:facet>
                 </p:card>
             </p:dataGrid>
@@ -47,6 +53,7 @@
                  draggable="false"
                  height="auto"
          ></p:schedule>
+
 
 
          </p:panel>

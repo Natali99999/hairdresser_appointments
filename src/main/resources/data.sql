@@ -5,7 +5,6 @@ DROP TABLE IF EXISTS hairdresser_serv;
 DROP TABLE IF EXISTS user;
 
 
-
 CREATE TABLE `appointment` (
                                `id` bigint(20) NOT NULL,
                                `start` datetime DEFAULT NULL,
@@ -23,10 +22,10 @@ INSERT INTO `appointment` (`id`, `start`, `hairdresser_id`, `serv_id`, `user_id`
                                                                                       (2, '2021-11-24 08:30:00', 1, 4, 2),
                                                                                       (3, '2021-11-22 10:30:00', 1, 1, 1),
                                                                                       (4, '2021-11-25 11:00:00', 1, 4, 2),
-                                                                                      (5, '2021-11-24 11:59:44', 2, 5, 1),
-                                                                                      (6, '2021-11-25 11:59:44', 2, 6, 2),
-                                                                                      (7, '2021-11-22 11:59:44', 3, 7, 1),
-                                                                                      (8, '2021-11-21 11:59:44', 3, 10, 2);
+                                                                                      (5, '2021-11-27 09:29:50', 2, 5, 1),
+                                                                                      (6, '2021-11-28 09:29:50', 2, 6, 2),
+                                                                                      (7, '2021-11-25 09:29:50', 3, 7, 1),
+                                                                                      (8, '2021-11-24 09:29:50', 3, 11, 2);
 
 -- --------------------------------------------------------
 
@@ -73,16 +72,17 @@ CREATE TABLE `hairdresser_serv` (
 
 INSERT INTO `hairdresser_serv` (`id`, `description`, `duration`, `image`, `price`, `service_category`, `title`) VALUES
                                                                                                                     (1, 'Ob kurz oder lang - wir scneiden die deine Wunschfrisur!', 1800000000000, 'resources/images/schneiden.jpg', 4000, 'DAMEN_HAARSCHNITT', 'Waschen & Schneiden'),
-                                                                                                                    (2, 'Angesagte Styles und Looks - jetzt umstylen lassen!', 1800000000000, 'resources/images/FoenenLegenStylen.jpg', 4000, 'DAMEN_HAARSCHNITT', 'Fönen, Legen & Stylen'),
+                                                                                                                    (2, 'Angesagte Styles und Looks - jetzt umstylen lassen!', 1800000000000, 'resources/images/FoehnenLegenStylen.jpg', 4000, 'DAMEN_HAARSCHNITT', 'Föhnen, Legen & Stylen'),
                                                                                                                     (3, 'Typveränderung gefällig? Unsere Locken halten in jedem Haar', 1800000000000, 'resources/images/locken.jpg', 2500, 'DAMEN_HAARSCHNITT', 'Locken machen'),
                                                                                                                     (4, 'Ansatz rausgewachsen? Jetzt schnell nachfärben lassen!', 3600000000000, 'resources/images/faerben.jpg', 3500, 'DAMEN_COLORATION', 'Ansatzfärbung'),
                                                                                                                     (5, 'Egal ob langes oder kurzes, glattes oder welliges Haar -Balayage ist im Trendund steht jedem!', 8100000000000, 'resources/images/Straenchen.jpg', 5500, 'DAMEN_COLORATION', 'Foliensträhnen'),
-                                                                                                                    (6, 'Wir frischen deine Haarfarbe wieder auf - schnell &unkompliziert', 7800000000000, 'resources/images/Farbaufrischung.jpg', 2500, 'DAMEN_COLORATION', 'Farbaufrischung'),
+                                                                                                                    (6, 'Wir frischen deine Haarfarbe wieder auf - schnell &unkompliziert', 7800000000000, 'resources/images/Farbauffrischung.jpg', 2500, 'DAMEN_COLORATION', 'Farbauffrischung'),
                                                                                                                     (7, 'Lass dich Inspirieren. Wir haben den passenden Look für deinen Typ!', 1800000000000, 'resources/images/herrenschnitt_lang.jpg', 2400, 'HERREN_HAARSCHNITT', 'Langhaarschnitt'),
                                                                                                                     (8, 'Coole Looks für kurze Haare - unsere Maschinenhaarschnitte sind immer voll im Trend!', 1800000000000, 'resources/images/Maschinenhaarschnitt.jpg', 1500, 'HERREN_HAARSCHNITT', 'Maschinenhaarschnitt'),
-                                                                                                                    (9, 'Beratungstermin für deinen Look zu besonderen Anlässen.', 1800000000000, 'resources/images/beratung.jpg', 2000, 'HOCHZEIT', 'Beratung - Frisur/Makeup'),
-                                                                                                                    (10, 'Termin zum Stylen deiner Hochzeitfrisur.', 3600000000000, 'resources/images/hochzeit.jpg', 4000, 'HOCHZEIT', 'Hochzeitfrisur'),
-                                                                                                                    (11, 'Wir nehmen dir den Hochzeitstress - mit unserem vollumfänglichem Hochzeitstyling', 5400000000000, 'resources/images/hochzeitspacket.jpg', 7000, 'HOCHZEIT', 'Hochzeitpacket');
+                                                                                                                    (9, 'Typveränderung gefällig? Unsere Locken halten in jedem Haar', 1800000000000, 'resources/images/Kopfmassage.jpg', 550, 'HERREN_HAARSCHNITT', 'Kopfmassage mit Haartonik'),
+                                                                                                                    (10, 'Beratungstermin für deinen Look zu besonderen Anlässen.', 1800000000000, 'resources/images/beratung.jpg', 2000, 'HOCHZEIT', 'Beratung - Frisur/Makeup'),
+                                                                                                                    (11, 'Termin zum Stylen deiner Hochzeitfrisur.', 3600000000000, 'resources/images/hochzeit.jpg', 4000, 'HOCHZEIT', 'Hochzeitfrisur'),
+                                                                                                                    (12, 'Wir nehmen dir den Hochzeitstress - mit unserem vollumfänglichem Hochzeitstyling', 5400000000000, 'resources/images/hochzeitspacket.jpg', 7000, 'HOCHZEIT', 'Hochzeitpacket');
 
 -- --------------------------------------------------------
 
@@ -145,7 +145,7 @@ ALTER TABLE `user`
 -- AUTO_INCREMENT für Tabelle `appointment`
 --
 ALTER TABLE `appointment`
-    MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=30;
+    MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT für Tabelle `hairdresser`
@@ -157,13 +157,13 @@ ALTER TABLE `hairdresser`
 -- AUTO_INCREMENT für Tabelle `hairdresser_serv`
 --
 ALTER TABLE `hairdresser_serv`
-    MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+    MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT für Tabelle `user`
 --
 ALTER TABLE `user`
-    MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+    MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- Constraints der exportierten Tabellen

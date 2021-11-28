@@ -101,8 +101,10 @@ public class Appointment {
         this.start = start;
     }
     public LocalDateTime end() {
-        if (getServ() != null)
-         return start.plusMinutes(getServ().getDuration());
+        if (getServ() != null) {
+
+            return start.plusMinutes(getServ().getDuration());
+        }
         return null;
     }
 

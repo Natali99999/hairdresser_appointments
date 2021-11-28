@@ -1,6 +1,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
         "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 
+
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
@@ -8,19 +9,22 @@
       xmlns:p="http://primefaces.org/ui">
 
 <h:head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+
     <h:outputStylesheet library="css" name="style.css"/>
-    <h:outputStylesheet library="ja" name="script.js"/>
+    <h:outputStylesheet library="js" name="script.js"/>
     <title>Termin buchen</title>
 </h:head>
 
 
 <body>
 
-<p:growl id="messages" sticky="true"  showDetail="true"/>
+<p:growl id="messages" sticky="true" showDetail="true"/>
 <p:outputLabel value="Termin bei Friseurin #{homeBean.selectedHairdresser.fullName}"/>
 <h:form id="form">
 
-<p:wizard flowListener="#{bookBean.onFlowProcess}" style="height: 100%">
+    <p:wizard flowListener="#{bookBean.onFlowProcess}" style="height: 100%">
         <p:tab id="service" title="Service auswählen">
 
             <p:accordionPanel id="myAccordionPanel" value="#{bookBean.categories}" var="category">
@@ -46,13 +50,12 @@
                                         <f:convertNumber currencySymbol="€" type="currency"/>
                                     </h:outputText>
                                 </p:panelGrid>
-                            </f:facet>
 
-
-                                <p:commandButton value="Service wählen">
-                                    <f:setPropertyActionListener value="#{hservice}"
-                                                                 target="#{bookBean.selectedHairdresserService}"/>
-                                </p:commandButton>
+                              </f:facet>
+                            <p:commandButton value="Service wählen">
+                                <f:setPropertyActionListener value="#{hservice}"
+                                                             target="#{bookBean.selectedHairdresserService}"/>
+                            </p:commandButton>
 
                         </p:card>
                     </p:dataGrid>
@@ -83,6 +86,7 @@
                             oncomplete="PF('eventDialog').show();"/>
                     <p:ajax event="dateSelect" listener="#{bookBean.onDateSelect}" update="eventDetails"
                             oncomplete="PF('eventDialog').show();"/>
+
                 </p:schedule>
 
                 <p:dialog widgetVar="eventDialog"
@@ -90,30 +94,37 @@
                           showEffect="fade"
                           hideEffect="fade">
                     <form action="dForm">
+                        <h:panelGrid id="eventDetails" columns="2" cellpadding="7">
+                            <p:outputLabel for="dauer" value="Dauer"/>
+                            <p:outputLabel id="dauer" value="#{bookBean.selectedHairdresserService.stringDuration}"
+                                           styleClass="p-text-bold"/>
 
+                            <p:outputLabel  for="date" value="Datum"/>
+                            <p:outputLabel id="date"  value="#{bookBean.selectedDate}" styleClass="p-text-bold"/>
+                            <p:outputLabel  for="time" value="Time"/>
+                            <p:outputLabel id="time"  value="#{bookBean.selectedTime}" styleClass="p-text-bold"/>
 
-                    <h:panelGrid id="eventDetails" columns="2" cellpadding="7">
-                        <p:outputLabel for="dauer" value="Dauer" styleClass="p-text-bold"/>
-                        <p:outputLabel id="dauer" value="#{bookBean.selectedHairdresserService.stringDuration}"
-                                       styleClass="p-text-bold"/>
+                            <!--       <div class="p-field p-col-12 p-md-4">
+                                     <p:datePicker id="timestart" appendTo="@(body)"
+                                                   value="#{bookBean.event.startDate}"
+                                                   timeOnly="true" pattern="HH:mm">
+                                          <f:validator validatorId="appointmentValidator" update="@form"/>-
+                                     </p:datePicker>
+                                 </div>-->
+                             </h:panelGrid>
+                             <div class="p-d-flex p-jc-between p-mt-3">
+                                 <!--  <p:commandButton type="reset" value="Abbrechen" styleClass="p-text-bold ui-button-outlined"/>
+                                -->
+                            <p:commandButton id="addEvent" value="Wählen"
+                                             action="#{bookBean.addEvent}"
+                                             oncomplete="PF('myschedule').update();PF('eventDialog').hide();">
+                            </p:commandButton>
+                            <p:commandButton id="storoEvent" value="Stornieren" style="margin-left: 3px; background-color: orangered"
+                                             action="#{bookBean.eventDelete}"
+                                             oncomplete="PF('myschedule').update();PF('eventDialog').hide();">
+                            </p:commandButton>
 
-                        <p:outputLabel for="timestart" value="Time" styleClass="p-text-bold"/>
-                        <div class="p-field p-col-12 p-md-4">
-                            <p:datePicker id="timestart" appendTo="@(body)"
-                                          value="#{bookBean.event.startDate}"
-                                          timeOnly="true" pattern="HH:mm">
-                                <f:validator validatorId="appointmentValidator" />
-                            </p:datePicker>
                         </div>
-                    </h:panelGrid>
-                    <div class="p-d-flex p-jc-between p-mt-3">
-                        <p:commandButton type="reset" value="Abbrechen" styleClass="p-text-bold ui-button-outlined"/>
-
-                          <p:commandButton id="addEvent" value="Termin wählen"
-                                          action="#{bookBean.addEvent}"
-                                         oncomplete="PF('myschedule').update();PF('eventDialog').hide();">
-                        </p:commandButton>
-                    </div>
                     </form>
                 </p:dialog>
 
@@ -141,7 +152,7 @@
                 <h:panelGrid id="pG" columns="2" columnClasses="label, value">
                     <p:outputLabel value="Vorname" styleClass="p-text-bold"/>
                     <p:outputLabel value="#{bookBean.userFirstsname}"
-                                  styleClass="outputLabel"/>
+                                   styleClass="outputLabel"/>
                     <h:outputText value="Nachname: "/>
                     <h:outputText value="#{bookBean.userLastsname}"
                                   styleClass="outputLabel"/>
@@ -165,6 +176,7 @@
                     <h:outputText value="#{bookBean.selectedTime}" styleClass="outputLabel"/>
                     <h:outputText/>
                 </h:panelGrid>
+
                 <p:commandButton value="Buchen"
                                  action="#{bookBean.toHome}"/>
 

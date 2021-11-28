@@ -1,10 +1,12 @@
 package com.hairdresser.appointment.beans;
 
 import com.hairdresser.appointment.client.AppointmentClient;
+import com.hairdresser.appointment.client.EmailClient;
 import com.hairdresser.appointment.client.HairdresserClient;
 import com.hairdresser.appointment.model.Appointment;
 
 import com.hairdresser.appointment.model.Hairdresser;
+import com.hairdresser.appointment.model.Mail;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -33,6 +35,8 @@ public class AppointmentBean {
     private AppointmentClient clientAppointments;
     @Autowired
     private HairdresserClient clientHairdressers;
+    @Autowired
+    private EmailClient emailClient;
 
     private LocalDate startDate =  LocalDate.now().minusDays(2);
     private LocalDate endDate =  LocalDate.now().plusDays(2);
@@ -68,6 +72,28 @@ public class AppointmentBean {
                 FacesMessage.SEVERITY_INFO, "Der Kalender von", selectedHairdresser.getFullName() + " wurde ausgewählt.");
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+
+    public void sendEmailToHairdresser(Hairdresser selectedHairdresser) {
+        log.debug("sendEmailToHairdresser {}", selectedHairdresser.getFullName());
+        String mailText =  String.format("Hi %s", selectedHairdresser.getFullName());
+        String title =  String.format("Email an %s", selectedHairdresser.getFullName());
+        String emailAddress = "natalifilatov@yahoo.de";
+        Mail mail = new Mail(emailAddress, title, mailText);
+
+        String result = emailClient.sendMail(mail);
+
+        FacesMessage message = new FacesMessage(
+                FacesMessage.SEVERITY_INFO, "Send email", "result");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }
+
+  /*  public void onSelect(AjaxBehaviorEvent e) {
+        setSelectedHairdresser(selectedHairdresser);
+        String label = ((Chip) e.getSource()).getLabel();
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Select Event", label + " selected.");
+        FacesContext.getCurrentInstance().addMessage(null, message);
+    }*/
+
 
 
     public ScheduleModel getLazyModel() {

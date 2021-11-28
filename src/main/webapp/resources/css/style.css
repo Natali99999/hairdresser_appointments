@@ -2,14 +2,13 @@
     background-color: coral;
 }*/
 .label {
-    width: 70%;
-    height: auto;
-    padding: 9px;
+    width: 20%;
+    padding: 4px;
 }
 
 .value {
-    width: 70%;
-    padding: 9px;
+    width: 80%;
+    padding: 4px;
 }
 
 .outputLabel {

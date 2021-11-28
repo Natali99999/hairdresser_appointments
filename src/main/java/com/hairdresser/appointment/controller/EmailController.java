@@ -11,10 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.mail.*;
-import javax.mail.internet.*;
-import java.io.IOException;
-import java.util.Date;
-import java.util.Properties;
 
 @RestController
 @RequestMapping("/api/v1/mail/")
@@ -38,4 +34,3 @@ public class EmailController {
         return new ResponseEntity<>("Attachment mail sent successfully", HttpStatus.OK);
     }
 }
-
